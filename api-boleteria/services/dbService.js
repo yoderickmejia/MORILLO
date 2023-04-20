@@ -13,7 +13,8 @@ const dbService = () => {
 
     const tables = {
         usersTable: 'usuarios',
-        eventsTable: 'eventos'
+        eventsTable: 'eventos',
+        sponsorsTable: 'patrocinadores'
     }
 
     const Users = {
@@ -32,7 +33,36 @@ const dbService = () => {
 
         getUsers: () => {
             return knex(tables.usersTable).select();
+        },
+
+        updateUser: (id, {nombre, apellidos, pasHash, email, telefono, fechaNac, imagen, patrocinador}) => {
+            return knex(tables.usersTable)
+                .where({ID_Usuario: id})
+                .update({
+                    Nombre: nombre,
+                    Apellidos: apellidos,
+                    PasHash: pasHash,
+                    Email: email,
+                    Telefono: telefono,
+                    Birth: fechaNac,
+                    Imagen: imagen,
+                    IsPatrocinador: patrocinador
+                });
+        },
+
+        detailUser: (id) => {
+            return knex(tables.usersTable)
+                .where({ID_Usuario: id})
+                .select();
+        },
+
+        login: ({Email,contraseña}) => {
+            return knex(tables.usersTable)
+            .where({Email: Email, PasHash:contraseña})
+            .select();
         }
+
+        
     }
 
     const Events = {
@@ -41,7 +71,7 @@ const dbService = () => {
         },
 
         addEvent: ({nombre, tipo, idPatrocinador, locacion, fecha, edadMin, descripcion, imagenes}) => {
-            knex(tables.eventsTable).insert({
+            return knex(tables.eventsTable).insert({
                 Nombre: nombre,
                 Tipo: tipo,
                 ID_Patrocindor: idPatrocinador,
@@ -51,11 +81,65 @@ const dbService = () => {
                 Descripcion: descripcion,
                 Imagenes: imagenes
             })
+        },
+
+        updateEvent: (id, {nombre, tipo, idPatrocinador, locacion, fecha, edadMin, descripcion, imagenes}) => {
+            return knex(tables.eventsTable)
+                .where({ID_Evento: id})
+                .update({
+                    Nombre: nombre,
+                    Tipo: tipo,
+                    ID_Patrocindor: idPatrocinador,
+                    Locacion: locacion,
+                    Fecha_Evento: fecha,
+                    Edad_Min: edadMin,
+                    Descripcion: descripcion,
+                    Imagenes: imagenes
+                });
+        },
+
+        detailEvent: (id) => {
+            knex(tables.eventsTable)
+                .where({ID_Evento: id})
+                .select();
         }
     }
 
+    const Sponsors = {
+        getSponsors: () => {
+            knex(tables.sponsorsTable).select()
+        },
+
+        addSponsor: (idUsuario, cedula, ubicacion) => {
+            knex(tables.sponsorsTable).insert({
+                ID_us: idUsuario,
+                Cedula: cedula,
+                Ubicacion: ubicacion
+            });
+        },
+
+        updateSponsor: (id, {idUsuario, cedula, ubicacion}) => {
+            knex(tables.sponsorsTable)
+                .where({ID_Patrocinador: id})
+                .update({
+                    ID_us: idUsuario,
+                    Cedula: cedula,
+                    Ubicacion: ubicacion
+                })
+        },
+
+        detailSponsor: (id) => {
+            knex(tables.sponsorsTable)
+                .where({ID_Sponsor: id})
+                .select()
+        }
+    }
+
+
     return{
-        Users, Events
+        Users, 
+        Events, 
+        Sponsors
     }
 }
 

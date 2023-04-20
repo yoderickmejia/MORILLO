@@ -1,46 +1,30 @@
-import { useState, useEffect, React } from 'react'
-import { Server, ServerImg, Axios } from './../backend';
-import { useNavigate } from 'react-router-dom';
-import CatalogCSS from '../css/Catalog.module.css'
-import { PropTypes } from 'prop-types';
-function Catalog({ Id, Title }) {
-  let navigate = useNavigate();
-  const [Products, SetProducts] = useState([]);
+import { Axios } from '../backend';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { getEvents } from '../functions/catalog.functions';
+
+const Catalog = () => {
+  const [events, setEvents] = useState(null);
+
   useEffect(() => {
-    async function fetchData() {
-      const site = Id===0? '/catalog/' : '/catalog/patron/' + Id;
-      const req = await Axios.get(Server + site);
-      SetProducts(req.data);
-    }
-    fetchData();
-  }, [Id]);
+    getEvents(setEvents);
+  }, [])
   return (
-    <div className={CatalogCSS.catalog}>
-      <h2 className={CatalogCSS.catalogTitle}>{Title}</h2>
-      <div className={CatalogCSS.catalogContainer}>
-        <>{
-          Products.map(Product => (
-            <div className={CatalogCSS.card} key={Product.ID_Evento}>
-              <div className={CatalogCSS.img} style={{ backgroundImage: 'url(' + ServerImg + Product.Imagenes[0] + ')' }}></div>
-              <div className={CatalogCSS.cardContent}>
-                <div className={CatalogCSS.text}>{Product.Nombre}</div>
-                <button className={CatalogCSS.learnmore} onClick={() => { navigate('/catalog/' + Product.ID_Evento) }}>DETALLES</button>
-              </div>
-            </div>
-          ))} </>
-      </div>
-    </div>
+    <>
+      {events.map(events => {
+        <div>
+          <p>{`${events.Nombre}`}</p>
+          <p>{`${events.Tipo}`}</p>
+          <p>{`${events.ID_Patrocinador}`}</p>
+          <p>{`${events.Locacion}`}</p>
+          <p>{`${events.Fecha_Evento}`}</p>
+          <p>{`${events.Edad_Min}`}</p>
+          <p>{`${events.Descripcion}`}</p>
+          <img src={events.Imagenes[0]} alt="" />
+        </div>
+      })}
+    </>
   )
 }
 
-Catalog.propTypes = {
-  Id: PropTypes.number,
-  Title: PropTypes.string
-}
-//create default props
-Catalog.defaultProps = {
-  Id: 0,
-  Title: 'Eventos'
-}
-export default Catalog;
-//style="background-image: url(IMG/eventOpera.jpg)
+export default Catalog

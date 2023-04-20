@@ -33,7 +33,7 @@ function LoginC() {
     const Email = User.UserData.Email, password = User.UserData.password;
     try{
 
-        const res = await Axios.post('/login', { Email, password })
+        const res = await Axios.post('/api/users/login', { Email, password })
         if (res.status===200) {
             SetUser(res.data);
             document.cookie = `token=${res.data.token} ; max-age=${60 * 60}; path=/; samesite=strict`;
