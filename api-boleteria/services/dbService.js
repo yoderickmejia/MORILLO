@@ -3,11 +3,11 @@ const dbService = () => {
     const knex = require('knex')({
         client: 'mysql2',
         connection: {
-            host: process.env.DB_HOST,
+            host: process.env.Host,
             port: 3306,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB
+            user: process.env.User,
+            password: process.env.Password,
+            database: process.env.db
         }
     })
 

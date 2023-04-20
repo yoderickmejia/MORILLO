@@ -35,7 +35,7 @@ module.exports = function(app, dbService){
     app.post('/api/users/login', (req, res) => {
         const user = req.body;
         dbService.Users.login(user).then((result) => {
-            res.send(result)
+            res.send(result);
         }).catch(e => {
             res.status(500).json(e);
             console.log(e);
