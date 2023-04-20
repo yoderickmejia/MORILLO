@@ -5,3 +5,4 @@ client/package-lock.json
 server/.env
 .DS_Store
 server/.env
+api-boleteria/.env

@@ -5,4 +5,4 @@ export const ServerImg = Base+'/img/';
 export const Axios = axios.create({
     baseURL: Server,
     timeout: 10000,
-});
+}); 
