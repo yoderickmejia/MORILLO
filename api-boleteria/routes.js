@@ -83,4 +83,36 @@ module.exports = function(app, dbService){
         const user = req.body;
         dbService.Events.updateEvent(req.params.id, req.body).then
     })
+
+    //sponsors routes
+    app.get('/api/sponsor', (req, res) => {
+        dbService.Sponsors.getSponsors().then(result => {
+            res.json(result)
+        }).catch(e => {
+            res.status(500).json(e);
+        });
+    });
+
+    app.get('/api/sponsor/:id', (req, res) => {
+        const id = req.params.id
+        dbService.Sponsors.detailsSponsor(id).then(result => {
+            res.json(result);
+        }).catch(e => {
+            res.status(500).json(e);
+        });
+    })
+
+    app.post('/api/sponsor', (req, res) => {
+        const user = req.body;
+        dbService.Sponsors.addSponsors(user).then(() => {
+            res.json(user);
+        }).catch(e => {
+            res.status(500).json(e);
+        })
+    });
+
+    app.put('/api/events/:id', (req, res) => {
+        const user = req.body;
+        dbService.Sponsors.updateSponsors(req.params.id, req.body).then
+    })
 }

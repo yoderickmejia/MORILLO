@@ -110,7 +110,7 @@ const dbService = () => {
             knex(tables.sponsorsTable).select()
         },
 
-        addSponsor: (idUsuario, cedula, ubicacion) => {
+        addSponsors: (idUsuario, cedula, ubicacion) => {
             knex(tables.sponsorsTable).insert({
                 ID_us: idUsuario,
                 Cedula: cedula,
@@ -118,7 +118,7 @@ const dbService = () => {
             });
         },
 
-        updateSponsor: (id, {idUsuario, cedula, ubicacion}) => {
+        updateSponsors: (id, {idUsuario, cedula, ubicacion}) => {
             knex(tables.sponsorsTable)
                 .where({ID_Patrocinador: id})
                 .update({
@@ -128,7 +128,7 @@ const dbService = () => {
                 })
         },
 
-        detailSponsor: (id) => {
+        detailSponsors: (id) => {
             knex(tables.sponsorsTable)
                 .where({ID_Sponsor: id})
                 .select()
