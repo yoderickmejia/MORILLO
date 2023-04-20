@@ -8,7 +8,7 @@ function Register() {
   const [Email, SetEmail] = useState(() => { return '' });
   const [Pass, SetPass] = useState(() => { return '' });
   const [Telefono, SetTelefono] = useState(() => { return '' });
-  const [Birth, SetBirth] = useState(() => { return new Date('1990-01-01') });
+  const [Birth, SetBirth] = useState(() => { return new Date('1990-01-01')});
   const [Guide, SetGuide] = useState(() => { return { status: false, msg: 'You must be 18 years old to register', color: 'red' } });
   const navigate = useNavigate();
   const Register = async () => {
@@ -21,11 +21,6 @@ function Register() {
       SetGuide({ status: false, msg: 'Please enter a valid email', style: { color: 'red' } });
       return;
     }
-    const PaswRegex = /^(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/gm;
-    if (!PaswRegex.test(Pass)) {
-      SetGuide({ status: false, msg: 'Please enter a valid password! It should contain 1 upper, 1 lower case letter and 1 number.', style: { color: 'red' } });
-      return;
-    }
     // check if birth is older than 18 years
     if ((new Date(Date.now()).getFullYear() - Birth.getFullYear()) < 18) {
       SetGuide({ status: false, msg: 'You must be 18 years old to register', style: { color: 'red' } });
@@ -33,7 +28,25 @@ function Register() {
     }
     SetGuide({ status: true, msg: 'Registering...', style: { color: 'black' } });
     try {
-      const resp = await Axios.post('/register', { nombre: Nombre, apellido: Apellido, email: Email.toLowerCase(), password: Pass, telefono: Telefono, fecha: Birth });
+      const user = {
+        Nombre: Nombre, 
+        Apellidos: Apellido, 
+        Email: Email.toLowerCase(), 
+        PasHash: Pass, 
+        Telefono: Telefono, 
+        Birth: Birth
+      }
+      
+      const resp = await Axios.post('/users', { 
+        nombre: Nombre, 
+        apellidos: Apellido, 
+        email: Email.toLowerCase(), 
+        pasHash: Pass, 
+        telefono: Telefono, 
+        fechaNac: Birth.toISOString().substring(0,10), 
+        imagen: null, 
+        patrocinador: false 
+      });
       if (resp.status === 200) {
         console.log('object');
         SetGuide({ status: true, msg: 'Register success', style: { color: 'green' } });
@@ -42,7 +55,7 @@ function Register() {
         console.log('papa');
     } catch (err) {
       console.log('anja');
-      SetGuide({ status: false, msg: err.response.data.err, style: { color: 'red' } });
+      SetGuide({ status: false, msg: err.response.data, style: { color: 'red' } });
     }
   }
   return (
@@ -55,25 +68,25 @@ function Register() {
               <div className={RegisterCSS.headerSubtitle}>Y comienza la experiencia</div>
             </div>
             <form action=''>
-              <label htmlFor="nombre">Nombre</label>
+              <label htmlFor="Nombre">Nombre</label>
               <input type="text" id="name" onChange={(e) => { SetNombre(e.target.value); }} value={Nombre} />
-              <label htmlFor="apellidos" >Apellidos</label>
+              <label htmlFor="Apellido" >Apellidos</label>
               <input type="text" id="apellido" onChange={(e) => { SetApellido(e.target.value); }} value={Apellido} />
-              <label htmlFor="email" >Email</label>
+              <label htmlFor="Email" >Email</label>
               <input type="email" id="email" onChange={(e) => { SetEmail(e.target.value); }} value={Email} />
-              <label htmlFor="password">Contraseña</label>
+              <label htmlFor="Password">Contraseña</label>
               <input type="password" onChange={(e) => { SetPass(e.target.value) }} value={Pass} />
-              <label htmlFor="telefono">Telefono</label>
+              <label htmlFor="Telefono">Telefono</label>
               <input type="text" id="telefono" onChange={(e) => { SetTelefono(e.target.value) }} value={Telefono} />
-              <label htmlFor="birth">Fecha de Nacimiento</label>
+              <label htmlFor="Birth">Fecha de Nacimiento</label>
               <input type="date" id="birth" onChange={(e) => {
                 console.log(e.target.value); SetBirth(new Date(e.target.value));
-              }} value={Birth.toISOString().substring(0, 10)
+              }} value={Birth.toISOString().substring(0,10)
               } />
 
-              <input type="submit" onClick={(event) => {
+              <input type="submit" onClick={event => {
                 event.preventDefault()
-                Register();
+                Register()
               }} value='Register' />
               <p style={Guide.style}>{Guide.msg}</p>
               <div className={RegisterCSS.headerSubtitle}><Link to='/signin'>Registrarse</Link></div>
