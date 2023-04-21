@@ -2,6 +2,7 @@ import { Axios } from '../backend';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { getEvents } from '../functions/catalog.functions';
+import Ticket from './ticket';
 
 const Catalog = () => {
   const [events, setEvents] = useState(null);
@@ -9,21 +10,22 @@ const Catalog = () => {
   useEffect(() => {
     getEvents(setEvents);
   }, [])
+  
   return (
-    <>
-      {events.map(events => {
-        <div>
-          <p>{`${events.Nombre}`}</p>
-          <p>{`${events.Tipo}`}</p>
-          <p>{`${events.ID_Patrocinador}`}</p>
-          <p>{`${events.Locacion}`}</p>
-          <p>{`${events.Fecha_Evento}`}</p>
-          <p>{`${events.Edad_Min}`}</p>
-          <p>{`${events.Descripcion}`}</p>
-          <img src={events.Imagenes[0]} alt="" />
-        </div>
-      })}
-    </>
+    <div className='catalog'>
+      {events !== null? (
+        events.map(events => (
+          <Ticket 
+            img={events.Imagenes[0]}
+            date={events.Fecha_Evento}
+            location={events.Locacion}
+            minAge={events.Edad_Min}
+            descripion={events.Descripcion}
+            title={events.Nombre}
+          />
+      ))
+      ) : console.log("events is null")}
+    </div>
   )
 }
 

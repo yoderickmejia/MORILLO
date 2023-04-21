@@ -1,8 +1,9 @@
+import { Server, Axios } from '../backend';
+import axios from 'axios';
+const getEvents = async (state) => {
+    const request = await axios.get(Server + "/events");
+    state(request.data)
+    console.log(request.data)
+}
 
-// import { Server } from '../backend';
-// const getEvents = async () => {
-//     const request = await Axios.get(Server + "/events");
-//     state(request.data)
-// }
-
-// export {getEvents}
+export {getEvents}
