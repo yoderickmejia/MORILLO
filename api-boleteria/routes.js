@@ -34,7 +34,7 @@ module.exports = function(app, dbService){
 
     app.post('/api/users/login', (req, res) => {
         const user = req.body;
-        dbService.Users.login(user).then((result) => {
+        dbService.Users.login(user).then(result => {
             res.send(result)
         }).catch(e => {
             res.status(500).json(e);
@@ -55,19 +55,20 @@ module.exports = function(app, dbService){
     //Events routes
     app.get('/api/events', (req, res) => {
         dbService.Events.getEvents().then(result => {
-            res.json(result)
+            res.send(result);
         }).catch(e => {
-            res.status(500).json(e);
-        });
-    });
+            res.status(500).json(e)
+            console.log(e)
+        })
+    })
 
     app.get('/api/events/:id', (req, res) => {
-        const id = req.params.id
-        dbService.Events.detailsEvent(id).then(result => {
-            res.json(result);
+        dbService.Events.detailEvent(req.params.id).then((result) => {
+            res.send(result)
         }).catch(e => {
             res.status(500).json(e);
-        });
+            console.log(e)
+        })
     })
 
     app.post('/api/events', (req, res) => {
