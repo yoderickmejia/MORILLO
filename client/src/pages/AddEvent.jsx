@@ -11,6 +11,10 @@ function AddEvent() {
     const [description, setDescription] = useState(() => (""));
     
     const AddEvent = async () => {
+        if (date === null){
+            date = new Date().toISOString().substring(0, 10)
+        }
+
         const response = await Axios.post('/add-event', {
             nombre: name,
             tipo: type,
@@ -47,7 +51,8 @@ function AddEvent() {
                     </div>
                     <div className={AddEventCSS.datosgenerales}>
                         <div className={AddEventCSS.titleDatos}>Datos Generales</div>
-                        <div className={AddEventCSS.textcontains}>Fecha: <input className={AddEventCSS.Fecha} placeholder='yyyy/mm/dd' onChange={(e) => {setDate(e.target.value)}}></input></div>
+                        <div className={AddEventCSS.textcontains}>Fecha: <input className={AddEventCSS.Fecha} placeholder='yyyy/mm/dd' 
+                        onChange={(e) => {setDate(e.target.value)}}></input></div>
                         <div className={AddEventCSS.textcontains}>Edad Mínima: <input className={AddEventCSS.EdadMinima} placeholder='00' onChange={(e) => {setMinAge(e.target.value)}}></input> años</div>
                     </div>
                 </div>
