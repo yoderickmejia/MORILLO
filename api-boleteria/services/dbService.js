@@ -74,7 +74,7 @@ const dbService = () => {
             return knex(tables.eventsTable).insert({
                 Nombre: nombre,
                 Tipo: tipo,
-                ID_Patrocindor: idPatrocinador,
+                ID_Patrocinador: idPatrocinador,
                 Locacion: locacion,
                 Fecha_Evento: fecha,
                 Edad_Min: edadMin,
@@ -89,7 +89,7 @@ const dbService = () => {
                 .update({
                     Nombre: nombre,
                     Tipo: tipo,
-                    ID_Patrocindor: idPatrocinador,
+                    ID_Patrocinador: idPatrocinador,
                     Locacion: locacion,
                     Fecha_Evento: fecha,
                     Edad_Min: edadMin,

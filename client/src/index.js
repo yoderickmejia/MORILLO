@@ -26,7 +26,7 @@ root.render(
         <Route path="/" element={<Home Comp={IndexP}/>}/>
         <Route path="/Login" element={<Login/>} />
         <Route path="/catalog" element={<Home Comp={Catalog}/>} />
-        <Route path="/catalog/:Id" element={<Home Comp={Details}/>} />
+        <Route path="/catalog/:id" element={<Home Comp={Details}/>} />
         <Route path="*" element={<Home Comp={NoPage}/>}/>
         <Route path="/user" element={<Home Comp={User}/>} />
         <Route path="/register-prov" element={<Home Comp={RegisterProv} />} />

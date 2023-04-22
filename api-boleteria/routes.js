@@ -71,7 +71,7 @@ module.exports = function(app, dbService){
         })
     })
 
-    app.post('/api/events', (req, res) => {
+    app.post('/api/add-event', (req, res) => {
         const user = req.body;
         dbService.Events.addEvent(user).then(() => {
             res.json(user);

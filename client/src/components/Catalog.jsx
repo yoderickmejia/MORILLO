@@ -12,11 +12,12 @@ const Catalog = () => {
   }, [])
   
   return (
-    <div className='catalog'>
+    <div className='catalog-container'>
       {events !== null? (
         events.map(events => (
           <Ticket 
-            img={events.Imagenes[0]}
+            id={events.ID_Evento}
+            img={events.Imagenes}
             date={events.Fecha_Evento}
             location={events.Locacion}
             minAge={events.Edad_Min}
