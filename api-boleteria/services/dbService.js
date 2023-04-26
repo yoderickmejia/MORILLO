@@ -56,10 +56,10 @@ const dbService = () => {
                 .select();
         },
 
-        login: ({Email,contraseña}) => {
+        login: ({email,password}) => {
             return knex(tables.usersTable)
-            .where({Email: Email, PasHash:contraseña})
-            .select();
+            .where({Email: email, PasHash:password})
+            .select('ID_Usuario').count();
         }
 
         

@@ -32,7 +32,7 @@ module.exports = function(app, dbService){
         });
     });
 
-    app.post('/api/users/login', (req, res) => {
+    app.post('/api/login', (req, res) => {
         const user = req.body;
         dbService.Users.login(user).then(result => {
             res.send(result)

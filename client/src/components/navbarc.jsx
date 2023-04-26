@@ -35,7 +35,7 @@ const Navbarc = () => {
             <>{ User.auth? <>
             <li><Link to="/user">Bienvenido {User.UserData.Nombre+'!'}</Link></li>
             <li><Link to='/logout'>Log Out</Link> </li>
-           </>
+          </>
             : <>
             <li><Link to="/login">Log-in</Link></li>
             <li><Link to="/SignIn">Register</Link></li>

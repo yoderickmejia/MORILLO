@@ -1,70 +1,87 @@
-import {Axios} from '../backend';
-import React ,{useState, useEffect} from 'react';
-import { useNavigate , Link, } from 'react-router-dom';
-import { useUserContext } from '../components/UserContext';
-function LoginC() {
-    const navigate = useNavigate();
-    const [Guide, SetGuide] = useState(() => { return { status: false, msg: 'Ingrese con su E-Mail y contraseña', style: { color: 'black' } } });
-    const [User, SetUser] = useUserContext();
-    useEffect(() => {
-     
-    const checkuser = async () => {
-        let NUser=null;
-        if (document.cookie.includes('token'))  {
-      NUser={token: document.cookie.replace('token=',''), auth: true};
-   const resp = await Axios.post('/auth', {
-        token: NUser.token,
-        auth: false
-      });
-      if (resp.status === 200) {
-        SetUser({...NUser, auth: true, UserData: resp.data.UserData});
-        navigate('/');
+import React, {useState, useEffect} from 'react'
+import { Login } from '../functions/users.functions';
+import { Axios } from '../backend';
+import { useNavigate } from 'react-router-dom';
+
+const LoginC = () => {
+  const navigate = useNavigate();
+  const [id, setId] = useState(null);
+  const [user, setUser] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null)
+
+  const Login = async () => {
+    const resp = await Axios.post('/login', { 
+      email: email, 
+      password: password, 
+    });
+    if (resp.status === 200) {
+      if(resp.data[0]['count(*)'] === 1){
+        setId(resp.data[0].ID_Usuario);
+        console.log('usuario encontrado con id: ' + id)
       }
-      if (resp.status===400){
-        SetUser({...NUser, auth: false});
+      else{
+        console.log('usuario no encontrado')
       }
-    
+    } else{
+      console.log('papa');
     }
+  }
+
+
+  return (
+    <div>
+      <form action="">
+        <label htmlFor="">Email</label>
+        <input type="text" name="" id="" onChange={e => {setEmail(e.target.value)}}/>
+        <label htmlFor="">Password</label>
+        <input type="password" name="" id="" onChange={e => {setPassword(e.target.value)}}/>
+        <button onClick={e => {
+          e.preventDefault();
+          Login()
+        }}>Iniciar Sesion</button>
+      </form>
+    </div>
+  )
 }
-  checkuser();
-},[ navigate, SetUser]);
 
-    const LogIn= async()=>{
-    const Email = User.UserData.Email, password = User.UserData.password;
-    try{
+export default LoginC
 
-        const res = await Axios.post('/api/users/login', { Email, password })
-        if (res.status===200) {
-            SetUser(res.data);
-            document.cookie = `token=${res.data.token} ; max-age=${60 * 60}; path=/; samesite=strict`;
-            navigate('/');
+//#region comentao
+// import {Axios} from '../backend';
+// import React ,{useState, useEffect} from 'react';
+// import { useNavigate , Link, } from 'react-router-dom';
+// import { useUserContext } from '../components/UserContext';
+// function LoginC() {
+//   const [id, setId] = useState(null);
+//   const [email, setEmail] = useState(null);
+//   const [password, setPassword] = useState(null);
 
-        }else{
-            SetGuide({status: true, msg: res.data.err, style: { color: 'red' }});
-        }
-    }catch (err){
-        SetGuide({status: true, msg: err.response.data.err, style: { color: 'red' }});
-    }
-    }
+//   const Login = () => {
+//     useEffect(() => {
+//       Login(email, password, id)
+//     }, [])
+//   }
     
-return (<form action="">
-    <label htmlFor="email">E-Mail</label>
-    <input type="email" id="email" onChange={(e)=>{SetUser({...User, UserData:{...User.UserData, Email: e.target.value}})}} placeholder='your@email.com'/>
-    <label htmlFor="password">Contraseña</label>
-    <input type="password" id='password' onChange={(e)=>{SetUser({...User, UserData:{...User.UserData, password: e.target.value}})}} />
-    
-    <input type="submit" value="Iniciar Sesion" onClick={
-        (e) => {
-            e.preventDefault();
-           LogIn();
-        }
-    }/>
-    <p style={Guide.style}>{Guide.msg}</p>
-    <Link to='/forgot'>Olvide mi contraseña</Link>
-    <Link to='/signin'>Registrarme</Link>
-</form>)
-}
-export default LoginC;
+// return (
+//   <form action="">
+//     <label htmlFor="email">E-Mail</label>
+//     <input type="email" id="email" onChange={(e)=>{setEmail(e.target.value)}} placeholder='your@email.com'/>
+//     <label htmlFor="password">Contraseña</label>
+//     <input type="password" id='password' onChange={(e)=>{setPassword(e.target.value)}} />
+  
+//     <input type="submit" value="Iniciar Sesion" onClick={
+//       (e) => {
+//           e.preventDefault();
+//           Login();
+//       }
+//     }/>
+//     <p></p>
+//     <Link to='/forgot'>Olvide mi contraseña</Link>
+//     <Link to='/signin'>Registrarme</Link>
+//   </form>)
+// }
+// export default LoginC;
 /*const EmailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g
   if (!EmailRegex.test(Email)) {
     SetGuide({ status: false,msg:'Please enter a valid email', style: {color: 'red'}});
@@ -75,3 +92,5 @@ export default LoginC;
     SetGuide({ status: false,msg:'Please enter a valid password! It should contain 1 upper, 1 lower case letter and 1 number.', style: {color: 'red'}});
     return;
   }/ */
+
+//#endregion
