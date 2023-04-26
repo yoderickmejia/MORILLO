@@ -1,5 +1,5 @@
 import { Axios } from "../backend";
-//const knex = require('knex')
+
 
 const Login = async (email, password, state) => {
     const request = await Axios.post("/login", {email: email, password: password});
@@ -7,12 +7,10 @@ const Login = async (email, password, state) => {
     console.log(request.data);
 }
 
-// const getUserById = (id, state) => {
-//     state (
-//         knex('Usuarios').where(
-//             {ID_Usuario: id}
-//         ).select
-//     )
-// }
+const getUserById = async (id, user) => {
+    const request = await Axios.get('/users/' + id);
+    user[0] = request.data[0];
+    
+}
 
-export {Login}
+export {Login, getUserById}

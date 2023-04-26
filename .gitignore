@@ -6,3 +6,5 @@ server/.env
 .DS_Store
 server/.env
 api-boleteria/.env
+client/.env
+client/.gitignore
