@@ -8,7 +8,6 @@ const getEvents = async (state) => {
 const getSingleEvent = async (id, state) => {
     const request = await Axios.get('/events/' + id)
     state(request.data[0])
-    console.log(request.data)
 } 
 
 export {getEvents, getSingleEvent}

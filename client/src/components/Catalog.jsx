@@ -20,7 +20,7 @@ const Catalog = () => {
           events.map(events => (
             <Ticket 
               id={events.ID_Evento}
-              img={'../assets/images/' + events.ID_Evento + '.png'}
+              //img={'../assets/images/' + events.ID_Evento + '.png'}
               date={events.Fecha_Evento}
               location={events.Locacion}
               minAge={events.Edad_Min}

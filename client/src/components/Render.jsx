@@ -2,14 +2,14 @@ import React, {Component} from "react";
 import Navbarc from "./navbarc";
 import NavbarR from "./navbarcregistred";
 
-function Login(){
+export function Login(){
     return (
         <div>
             <NavbarR /> 
         </div>
     );
 }
-function Logout(){
+export function Logout(){
     return (
         <div>
             <Navbarc />
