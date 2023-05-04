@@ -14,7 +14,7 @@ const Catalog = () => {
   
   return (
     <div className={CatalogCSS.catalog}>
-      <h1 className={CatalogCSS.catalogTitle}>Catalog</h1>
+      <h1 className={CatalogCSS.catalogTitle}>Catalogo</h1>
       <div className={CatalogCSS.catalogContainer}>
         {events !== null? (
           events.map(events => (
