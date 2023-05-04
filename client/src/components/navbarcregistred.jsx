@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
 import {Link, useNavigate} from 'react-router-dom';
 import {useUserContext} from './UserContext';
-import {Axios} from './../backend';
-const Navbarc = () => {
+import {Axios} from '../backend';
+const NavbarR = () => {
   const navigate= useNavigate();
   const [User, SetUser] = useUserContext();
     useEffect(() => {
@@ -36,9 +36,8 @@ const Navbarc = () => {
             <li><Link to="/user">Bienvenido {User.UserData.Nombre+'!'}</Link></li>
             <li><Link to='/logout'>Log Out</Link> </li>
             </>
-            : <>
-            <li><Link to="/login">Log-in</Link></li>
-            <li><Link to="/SignIn">Register</Link></li>
+            :<>
+            <li><h1>User</h1></li>
             </>
             } </>
           </ul>
@@ -56,7 +55,7 @@ const Navbarc = () => {
           </>
           : <>
           <li><Link to="/login">Log-in</Link></li>
-          <li><Link to="/SignIn">Register</Link></li>
+            <li><Link to="/SignIn">klk</Link></li>
           </>
           } </>
         </ul>
@@ -69,4 +68,4 @@ const Navbarc = () => {
   }
 }
 //SetUser({ auth: false, token: null,UserData:{}})
-export default Navbarc
+export default NavbarR

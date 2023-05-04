@@ -14,6 +14,7 @@ import AddEvent from './pages/AddEvent.jsx'
 import { UserProvider } from './components/UserContext';
 import './css/normalize.css';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const RenderApp= ()=>{

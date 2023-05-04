@@ -7,12 +7,11 @@ function LoginC() {
     const [Guide, SetGuide] = useState(() => { return { status: false, msg: 'Ingrese con su E-Mail y contraseña', style: { color: 'black' } } });
     const [User, SetUser] = useUserContext();
     useEffect(() => {
-     
     const checkuser = async () => {
         let NUser=null;
         if (document.cookie.includes('token'))  {
       NUser={token: document.cookie.replace('token=',''), auth: true};
-   const resp = await Axios.post('/auth', {
+    const resp = await Axios.post('/auth', {
         token: NUser.token,
         auth: false
       });
@@ -56,7 +55,7 @@ return (<form action="">
     <input type="submit" value="Iniciar Sesion" onClick={
         (e) => {
             e.preventDefault();
-           LogIn();
+            LogIn();
         }
     }/>
     <p style={Guide.style}>{Guide.msg}</p>
