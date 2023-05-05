@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import AddEventCSS from './../css/addevent.module.css';
-import { Axios, Server } from '../backend';
+import { Axios, Server } from '../backend';     
 
 function AddEvent() {
     const [name, setName] = useState(() => (""));
@@ -9,6 +9,8 @@ function AddEvent() {
     const [date, setDate] = useState(() => (""));
     const [minAge, setMinAge] = useState(() => (""));
     const [description, setDescription] = useState(() => (""));
+    let img = '';
+    let images = [];
     
     const AddEvent = async () => {
         if (date === null){
@@ -21,9 +23,9 @@ function AddEvent() {
             locacion: location,
             fecha: date,
             edadMin: minAge,
-            descripcion: description
+            descripcion: description,
+            imagenes: JSON.stringify(images)
         })
-
 
         if (response.status === 200){
             console.log("si")
@@ -37,7 +39,11 @@ function AddEvent() {
         <div className={AddEventCSS.productDetails}>
             <div className={AddEventCSS.eventContainer}>
             <div className={AddEventCSS.imgContainer}>
-                <input className={AddEventCSS.imgInput} type='file'></input>
+                <input className={AddEventCSS.imgInput} type='file' onChange={(e) => {
+                    img = (e.target.value)
+                    images.push(img.split('\\')[2])
+                    console.log(img.split('\\')[2])
+                }}></input>
             </div>
             <div className={AddEventCSS.text}>
                 <input className={AddEventCSS.title} placeholder='Titulo del evento' onChange={(e) => {setName(e.target.value)}}></input>
