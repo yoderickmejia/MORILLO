@@ -4,13 +4,20 @@ import { useNavigate, Link } from 'react-router-dom';
 import { getEvents } from '../functions/catalog.functions';
 import Ticket from './ticket';
 import CatalogCSS from '../css/Catalog.module.css'
+import { getEventsBySponsor } from '../functions/sponsors.functions';
 
-const Catalog = () => {
+const Catalog = (props) => {
   const [events, setEvents] = useState(null);
 
   useEffect(() => {
-    getEvents(setEvents);
+    if (props.inProfile === true){
+      getEventsBySponsor(props.id, setEvents)
+    }
+    else{
+      getEvents(setEvents);
+    }
   }, [])
+
   
   return (
     <div className={CatalogCSS.catalog}>
@@ -21,7 +28,7 @@ const Catalog = () => {
             <Ticket 
               id={events.ID_Evento}
               //img={'../assets/images/' + events.ID_Evento + '.png'}
-              date={events.Fecha_Evento}
+              date={(events.Fecha_Evento).substring(0, 10)}
               location={events.Locacion}
               minAge={events.Edad_Min}
               descripion={events.Descripcion}

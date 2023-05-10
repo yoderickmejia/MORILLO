@@ -100,7 +100,7 @@ module.exports = function(app, dbService){
 
     app.get('/api/sponsor/:id', (req, res) => {
         const id = req.params.id
-        dbService.Sponsors.detailsSponsor(id).then(result => {
+        dbService.Sponsors.detailSponsor(id).then(result => {
             res.json(result);
         }).catch(e => {
             res.status(500).json(e);
@@ -115,6 +115,15 @@ module.exports = function(app, dbService){
             res.status(500).json(e);
         })
     });
+
+    app.get('/api/sponsor/:id/events', (req, res) => {
+        const id = req.params.id;
+        dbService.Sponsors.eventsSponsor(id).then((result) => {
+            res.json(result);
+        }).catch(e => {
+            res.status(500).json(e);
+        })
+    })
 
     /*---------------------------------Images-------------------------------------------*/
 

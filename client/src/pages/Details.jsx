@@ -32,7 +32,7 @@ function Details(props){
               </div>
               <div className={DetailsCSS.datosgenerales}>
                 <div className={DetailsCSS.titleDatos}>Datos Generales</div>
-                <div className={DetailsCSS.textcontains}>Fecha:{event.Fecha_Evento}</div>
+                <div className={DetailsCSS.textcontains}>Fecha:{(event.Fecha_Evento).substring(0, 10)}</div>
                 <div className={DetailsCSS.textcontains}>Edad Mínima: {event.Edad_Min} años</div>
               </div>
             </div>

@@ -17,6 +17,7 @@ const NavbarR = (props) => {
             <ul>
               <li><Link to="/">Home</Link></li>
               <li><Link to="/catalog">Catalogo</Link></li>
+              <li><Link to="/add-event">Agregar evento</Link></li>
             </ul>
             <ul>
               <>
@@ -32,6 +33,7 @@ const NavbarR = (props) => {
           <ul>
             <li><Link to="/">Home</Link></li>
             <li><Link to="/catalog">Catalog</Link></li>
+            <li><Link to="/add-event">Agregar evento</Link></li>
           </ul>
         </div>
       </nav>

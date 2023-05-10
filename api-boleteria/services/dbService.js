@@ -129,8 +129,25 @@ const dbService = () => {
 
         detailSponsor: (id) => {
             return knex(tables.sponsorsTable)
-                .where({ID_Sponsor: id})
+                .where({ID_Patrocinador: id})
                 .select()
+        },
+
+        eventsSponsor: (id) => {
+            return knex.select(
+                'eventos.ID_Evento',
+                'eventos.Nombre',
+                'eventos.Tipo',
+                'eventos.ID_Patrocinador',
+                'eventos.Locacion',
+                'eventos.Fecha_Evento',
+                'eventos.Edad_Min',
+                'eventos.Descripcion',
+                'eventos.Imagenes'
+            )
+            .from(tables.eventsTable)
+            .join(tables.sponsorsTable, 'eventos.ID_Patrocinador', 'patrocinadores.ID_Patrocinador')
+            .where('patrocinadores.ID_Us', id)
         }
     }
 
