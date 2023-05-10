@@ -109,7 +109,7 @@ const dbService = () => {
             return knex(tables.sponsorsTable).select()
         },
 
-        addSponsor: (idUsuario, cedula, ubicacion) => {
+        addSponsor: ({idUsuario, cedula, ubicacion}) => {
             return knex(tables.sponsorsTable).insert({
                 ID_us: idUsuario,
                 Cedula: cedula,

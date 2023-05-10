@@ -109,7 +109,8 @@ module.exports = function(app, dbService){
 
     app.post('/api/sponsor', (req, res) => {
         const user = req.body;
-        dbService.Sponsors.addSponsors(user).then(() => {
+        console.log(user)
+        dbService.Sponsors.addSponsor(user).then(() => {
             res.json(user);
         }).catch(e => {
             res.status(500).json(e);
