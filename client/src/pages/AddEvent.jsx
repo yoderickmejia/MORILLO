@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import AddEventCSS from './../css/addevent.module.css';
-import { Axios, Server } from '../backend';     
+import { Axios, Server } from '../backend';   
+import ReactDOM from 'react-dom';  
 
 function AddEvent() {
     const [name, setName] = useState(() => (""));
@@ -36,13 +37,30 @@ function AddEvent() {
     }
 
     return (
-        <div className={AddEventCSS.productDetails}>
+        <form action="" id="form">
+            <img src="" id='imagen' alt="" />
+            <div className={AddEventCSS.productDetails}>
             <div className={AddEventCSS.eventContainer}>
             <div className={AddEventCSS.imgContainer}>
-                <input className={AddEventCSS.imgInput} type='file' onChange={(e) => {
-                    img = (e.target.value)
-                    images.push(img.split('\\')[2])
-                    console.log(img.split('\\')[2])
+                <input className={AddEventCSS.imgInput} id='imgs' name='image' multiple type='file' onChange={(e) => {
+                    images.push(e.target.value)
+                    //console.log(document.getElementById("imgs").files)
+                    let arr = []
+                    arr = document.getElementById("imgs").files
+                    let image = [] 
+                    for (let i = 0; i < arr.length; i++){
+                        image.push(URL.createObjectURL(arr[i]))
+                        console.log(image[i])
+                    }
+                    image.map(i => {
+                        
+                    })
+
+                    // images.map(i => {
+                    //     console.log(i)
+                    // })
+                    const formData = new FormData(document.querySelector("#form"));
+                    document.getElementById("imagen").setAttribute('src', image[0])
                 }}></input>
             </div>
             <div className={AddEventCSS.text}>
@@ -69,6 +87,8 @@ function AddEvent() {
                 </div>
             </div>
         </div>
+        </form>
+        
     )
 }
 

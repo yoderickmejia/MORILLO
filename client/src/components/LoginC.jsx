@@ -1,42 +1,51 @@
 import React, {useState, useEffect} from 'react'
-import { getUserById } from '../functions/users.functions';
+import { getUserById, Login } from '../functions/users.functions';
 import { Axios } from '../backend';
 import { useNavigate } from 'react-router-dom';
-import { conditionalrender } from './Render';
 
+let _user
+let _session
 
 const LoginC = () => {
   const navigate = useNavigate();
   let id
-  let user = []
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null)
+  const [user, SetUser] = useState(null);
+  const [session, setSession] = useState(null);
+  const [response, setResponse] = useState(null);
+  const [runLogin, setRunLogin] = useState(null);
   
-
-  const Login = async () => {
-    const resp = await Axios.post('/login', { 
-      email: email, 
-      password: password, 
-    });
-    if (resp.status === 200) {
-      if(resp.data[0]['count(*)'] === 1){
-        id = resp.data[0].ID_Usuario;
-        getUserById(id, user)
-        console.log(user)
-        console.log('usuario encontrado con id: ' + id)
-        conditionalrender.state = {Session: true};
-        navigate('/');
-        console.log(conditionalrender.state)
-      }
-      else{
-        console.log('usuario no encontrado')
-        conditionalrender.state.Session = false;
-      }
-    } else{
-      console.log('papa');
+  useEffect(() => {
+    if (email !== null && password !== null && runLogin){
+      Login(email, password, setResponse)
     }
-  }
+    setRunLogin(false)
+  }, [email, password, runLogin])
+  
+  useEffect(() => {
+    if (response !== null){
+      if (response.status === 200) {
+        if(response.data[0]['count(*)'] === 1){
+          id = response.data[0].ID_Usuario;
+          getUserById(id, SetUser)
+          setSession(true)
+        }
+      } else{
+        console.log('papa');
+      }
+    }
 
+  }, [response])
+
+  useEffect(() => {
+    if (user !== null){
+      _user = user
+      _session = session
+      navigate('/')
+    }
+  }, [user, session])
+  
 
   return (
     <div>
@@ -46,12 +55,13 @@ const LoginC = () => {
         <label htmlFor="">Password</label>
         <input type="password" name="" onChange={e => {setPassword(e.target.value)}}/>
         <button onClick={e => {
-          Login()
-          e.preventDefault();
+          setRunLogin(true)
+          e.preventDefault(); 
         }}>Iniciar Sesion</button>
       </form>
     </div>
   )
 }
 
-export default LoginC
+export default LoginC
+export {_user, _session}

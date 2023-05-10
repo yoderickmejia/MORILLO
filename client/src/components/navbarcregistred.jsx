@@ -1,66 +1,42 @@
-import React, {useEffect} from 'react'
+import React, {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom';
 import {useUserContext} from './UserContext';
 import {Axios} from '../backend';
-const NavbarR = () => {
+
+
+const NavbarR = (props) => {
   const navigate= useNavigate();
-  const [User, SetUser] = useUserContext();
-    useEffect(() => {
-      const checkuser = async () => {
-      if (!document.cookie.includes('token')) return;
-      const resp = await Axios.post('/auth', {
-          token: document.cookie.replace('token=','')
-        })
-        if (resp.status === 200) {
-          SetUser({...resp.data, auth:true});
-        }
-        if (resp.status===400){
-          SetUser({...resp.data, auth: false});
-          navigate('/login');
-        }
-      
-    }
-    checkuser();
-    }, [navigate, SetUser]);
+  const [User, SetUser] = useState();
+  console.log(props.user.Nombre)
   return (
-    <nav>
-      <div className='default-nav'>
-        <Link to="/" className="nav-logo">Morix</Link>
-        <div className='links'>
+    props.user !== undefined? (
+      <nav>
+        <div className='default-nav'>
+          <Link to="/" className="nav-logo">Morix</Link>
+          <div className='links'>
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/catalog">Catalogo</Link></li>
+            </ul>
+            <ul>
+              <>
+              <li><Link to="/user">Mi perfil ({props.user.Nombre})</Link></li>
+              <li><Link to='/logout'>Log Out</Link> </li>
+              </>
+            </ul>
+          </div>
+        </div>
+        <div className='responsive-nav'>
+          <Link to="/" className="nav-logo">Morix</Link>
+          <button className="nav-menu" onClick={responsiveMenuClick}><i className="fa-solid fa-bars"></i></button>
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/catalog">Catalogo</Link></li>
-          </ul>
-          <ul>
-            <>{ User.auth? <>
-            <li><Link to="/user">Bienvenido {User.UserData.Nombre+'!'}</Link></li>
-            <li><Link to='/logout'>Log Out</Link> </li>
-            </>
-            :<>
-            <li><h1>User</h1></li>
-            </>
-            } </>
+            <li><Link to="/catalog">Catalog</Link></li>
           </ul>
         </div>
-      </div>
-      <div className='responsive-nav'>
-        <Link to="/" className="nav-logo">Morix</Link>
-        <button className="nav-menu" onClick={responsiveMenuClick}><i className="fa-solid fa-bars"></i></button>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/catalog">Catalog</Link></li>
-          <>{ User.auth? <>
-          <li><Link to="/user">Bienvenido {User.UserData.Nombre+'!'}</Link></li>
-          <li><Link to='/logout'>Log Out</Link> </li>
-          </>
-          : <>
-          <li><Link to="/login">Log-in</Link></li>
-            <li><Link to="/SignIn">klk</Link></li>
-          </>
-          } </>
-        </ul>
-      </div>
-    </nav>
+      </nav>
+    ): <h1>klk</h1>
+    
   )
 
   function responsiveMenuClick() {

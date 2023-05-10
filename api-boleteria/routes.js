@@ -115,4 +115,10 @@ module.exports = function(app, dbService){
             res.status(500).json(e);
         })
     });
+
+    /*---------------------------------Images-------------------------------------------*/
+
+    app.get('/api/images', (req, res) => {
+        
+    })
 }
