@@ -1,3 +1,6 @@
+const multer = require('multer')
+const uuid = require('uuid')
+const path = require("path")
 module.exports = function(app, dbService){
     app.get('/api', (req, res) => {
         res.status(200).json;
@@ -83,7 +86,7 @@ module.exports = function(app, dbService){
     app.put('/api/events/:id', (req, res) => {
         const user = req.body;
         dbService.Events.updateEvent(req.params.id, req.body).then(() => {
-            res.send("User updated");
+            res.send("Event updated");
         }).catch(e => {
             res.status(500).json(e);
         })
@@ -136,8 +139,20 @@ module.exports = function(app, dbService){
     })
 
     /*---------------------------------Images-------------------------------------------*/
+    const storage = multer.diskStorage({
+        destination: 'public/uploads',
+        filename: (req, file, callback) => {
+            callback(null, uuid.v4() + path.extname(file.originalname))
+        }
+    })
 
-    app.get('/api/images', (req, res) => {
-        
+    const upload = multer({
+        storage: storage, 
+        dest: 'public/uploads'
+    }).single('image');
+
+    app.post('/api/images', upload, (req, res) => {
+        res.send("subio")
+        console.log(req)
     })
 }

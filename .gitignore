@@ -8,3 +8,4 @@ server/.env
 api-boleteria/.env
 client/.env
 client/.gitignore
+api-boleteria/node_modules

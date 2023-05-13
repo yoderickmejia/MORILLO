@@ -3,6 +3,10 @@ const express = require('express');
 const port = process.env.port || 80;
 const bodyParser = require('body-parser');
 const { dbService } = require('./services/dbService');
+const multer = require('multer')
+const path = require('path')
+
+
 
 const app = express();
 
@@ -11,7 +15,8 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
-    });
+});
+app.use(express.static(path.join(__dirname, './public')))
 
 app.use(bodyParser.json());
 

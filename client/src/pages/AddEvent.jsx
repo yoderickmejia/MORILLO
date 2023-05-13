@@ -40,30 +40,26 @@ function AddEvent() {
     }
 
     return (
-        <form action="" id="form">
+        <form action="http://localhost:80/api/images/" id="form" method='POST' encType='multipart/form-data'>
             <img src="" id='imagen' alt="" />
             <div className={AddEventCSS.productDetails}>
             <div className={AddEventCSS.eventContainer}>
             <div className={AddEventCSS.imgContainer}>
-                <input className={AddEventCSS.imgInput} id='imgs' name='image' multiple type='file' onChange={(e) => {
+                <input className={AddEventCSS.imgInput} id='imgs' name='image' type='file' onChange={(e) => {
                     images.push(e.target.value)
                     //console.log(document.getElementById("imgs").files)
                     let arr = []
                     arr = document.getElementById("imgs").files
                     let image = [] 
                     for (let i = 0; i < arr.length; i++){
-                        image.push(URL.createObjectURL(arr[i]))
+                        image.push(arr[i])
                         console.log(image[i])
                     }
-                    image.map(i => {
-                        
-                    })
 
                     // images.map(i => {
                     //     console.log(i)
                     // })
                     const formData = new FormData(document.querySelector("#form"));
-                    document.getElementById("imagen").setAttribute('src', image[0])
                 }}></input>
             </div>
             <div className={AddEventCSS.text}>
@@ -78,13 +74,12 @@ function AddEvent() {
                     </div>
                     <div className={AddEventCSS.datosgenerales}>
                         <div className={AddEventCSS.titleDatos}>Datos Generales</div>
-                        <div className={AddEventCSS.textcontains}>Fecha: <input className={AddEventCSS.Fecha} placeholder='yyyy/mm/dd' 
+                        <div className={AddEventCSS.textcontains}>Fecha: <input className={AddEventCSS.Fecha} type='date' defaultValue={"1990-01-01"}
                         onChange={(e) => {setDate(e.target.value)}}></input></div>
                         <div className={AddEventCSS.textcontains}>Edad Mínima: <input className={AddEventCSS.EdadMinima} placeholder='00' onChange={(e) => {setMinAge(e.target.value)}}></input> años</div>
                     </div>
                 </div>
                     <button className={AddEventCSS.boton} onClick={e => {
-                        e.preventDefault();
                         AddEvent()
                     }}>GUARDAR EVENTO</button>
                 </div>
