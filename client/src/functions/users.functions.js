@@ -1,4 +1,6 @@
 import { Axios } from "../backend";
+import { createContext } from "react";
+import { getSponsorByUser } from "./sponsors.functions";
 
 
 const Login = async (email, password, state) => {
@@ -7,9 +9,18 @@ const Login = async (email, password, state) => {
     console.log(request.data);
 }
 
-const getUserById = async (id, user) => {
+const getUserById = async (id, user, state) => {
     const request = await Axios.get('/users/' + id);
-    user(request.data[0])
+    let data
+    if (user.IsPatrocinador !== true){
+        console.log("patro")
+        data = {userData: request.data[0], sponsorData: user.sponsorData};
+        state(data)
+    }
+    else{
+        data = {userData: request.data[0]};
+        state(data)
+    }
 }
 
 export {Login, getUserById}

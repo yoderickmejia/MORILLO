@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import AddEventCSS from './../css/addevent.module.css';
 import { Axios, Server } from '../backend';   
-import ReactDOM from 'react-dom';  
+import ReactDOM from 'react-dom';
+import { useUserContext } from '../components/UserContext';
 
 function AddEvent() {
     const [name, setName] = useState(() => (""));
@@ -10,6 +11,7 @@ function AddEvent() {
     const [date, setDate] = useState(() => (""));
     const [minAge, setMinAge] = useState(() => (""));
     const [description, setDescription] = useState(() => (""));
+    const [user, setUser] = useUserContext()
     let img = '';
     let images = [];
     
@@ -25,7 +27,8 @@ function AddEvent() {
             fecha: date,
             edadMin: minAge,
             descripcion: description,
-            imagenes: JSON.stringify(images)
+            imagenes: JSON.stringify(images),
+            idPatrocinador: user.sponsorData.ID_Patrocinador
         })
 
         if (response.status === 200){

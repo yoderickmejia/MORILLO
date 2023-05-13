@@ -5,23 +5,6 @@ import {Axios} from './../backend';
 const Navbarc = () => {
   const navigate= useNavigate();
   const [User, SetUser] = useUserContext();
-    useEffect(() => {
-      const checkuser = async () => {
-      if (!document.cookie.includes('token')) return;
-      const resp = await Axios.post('/auth', {
-          token: document.cookie.replace('token=','')
-        })
-        if (resp.status === 200) {
-          SetUser({...resp.data, auth:true});
-        }
-        if (resp.status===400){
-          SetUser({...resp.data, auth: false});
-          navigate('/login');
-        }
-      
-    }
-    checkuser();
-    }, [navigate, SetUser]);
   return (
     <nav>
       <div className='default-nav'>
@@ -32,15 +15,10 @@ const Navbarc = () => {
             <li><Link to="/catalog">Catalogo</Link></li>
           </ul>
           <ul>
-            <>{ User.auth? <>
-            <li><Link to="/user">Bienvenido {User.UserData.Nombre+'!'}</Link></li>
-            <li><Link to='/logout'>Log Out</Link> </li>
-            </>
-            : <>
+            <>
             <li><Link to="/login">Log-in</Link></li>
             <li><Link to="/SignIn">Register</Link></li>
             </>
-            } </>
           </ul>
         </div>
       </div>
@@ -50,15 +28,10 @@ const Navbarc = () => {
         <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/catalog">Catalog</Link></li>
-          <>{ User.auth? <>
-          <li><Link to="/user">Bienvenido {User.UserData.Nombre+'!'}</Link></li>
-          <li><Link to='/logout'>Log Out</Link> </li>
-          </>
-          : <>
+          <>
           <li><Link to="/login">Log-in</Link></li>
           <li><Link to="/SignIn">Register</Link></li>
           </>
-          } </>
         </ul>
       </div>
     </nav>

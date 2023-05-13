@@ -4,12 +4,13 @@ import {useUserContext} from './UserContext';
 import {Axios} from '../backend';
 
 
-const NavbarR = (props) => {
+const NavbarR = () => {
   const navigate= useNavigate();
-  const [User, SetUser] = useState();
-  console.log(props.user.Nombre)
+  const [User, SetUser] = useUserContext();
+  localStorage.setItem("User", JSON.stringify(User))
+  console.log(User)
   return (
-    props.user !== undefined? (
+    User.userData !== null? (
       <nav>
         <div className='default-nav'>
           <Link to="/" className="nav-logo">Morix</Link>
@@ -21,8 +22,13 @@ const NavbarR = (props) => {
             </ul>
             <ul>
               <>
-              <li><Link to="/user">Mi perfil ({props.user.Nombre})</Link></li>
-              <li><Link to='/logout'>Log Out</Link> </li>
+              <li><Link to="/user">Mi perfil ({User.userData.Nombre})</Link></li>
+              <li><a onClick={e => {
+                e.preventDefault()
+                localStorage.clear()
+                SetUser({userData: null, sponsorData: null})
+                navigate('/')
+              }}>Log Out</a></li>
               </>
             </ul>
           </div>

@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import styles from '../css/provreg.module.css';
 import { addSponsor } from '../functions/sponsors.functions';
-import { _user } from '../components/LoginC';
+import { getUserById } from '../functions/users.functions';
+import { useUserContext } from '../components/UserContext';
 
 function RegisterProv  () {
   const [category, setCategory] = useState(null);
@@ -10,6 +11,8 @@ function RegisterProv  () {
   const [cedula, setCedula] = useState(null);
   const [location, setLocation] = useState(null);
   const [check, setCheck] = useState(null);
+  const [text, setText] = useState(null);
+  const [user, setUser] = useUserContext();
 
   return (
     <div className={styles.registerProv}>
@@ -36,14 +39,16 @@ function RegisterProv  () {
         <p>Estoy de acuerdo con Terminos y Condiciones</p>
         <input class={styles.botons} type="submit" value="Registrar" onClick={e => {
           e.preventDefault();
-          if (password === _user.PasHash){
-            addSponsor(
+          if (password === user.userData.PasHash){
+            if(addSponsor(
               {
-                idUsuario: _user.ID_Usuario,
+                idUsuario: user.userData.ID_Usuario,
                 cedula: cedula,
                 ubicacion: location
-              }, _user
-            )
+              }, user, setUser
+            )){ 
+              console.log('ya')
+            }
           }
           else{
             console.log('password dont match')

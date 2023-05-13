@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Navbarc from "./navbarc";
 import NavbarR from "./navbarcregistred";
+import { useUserContext } from "./UserContext";
 
 // export function Login(props){
 //     return (
@@ -17,17 +18,17 @@ import NavbarR from "./navbarcregistred";
 //     );
 // }
 
-const ConditionalRender = (props) => {
+const ConditionalRender = () => {
+    const [user, setUser] = useUserContext();
     const Login = () => {
         return (
             <div>
-                <NavbarR user = {props.user} /> 
+                <NavbarR /> 
             </div>
         )
     }
     
     const Logout = () => {
-        console.log("user not found")
         return <div>
             <Navbarc />
         </div>
@@ -36,7 +37,7 @@ const ConditionalRender = (props) => {
     
 
     return (
-        props.session && props.user !== null? <Login /> : <Logout />
+        user.userData !== null? <Login /> : <Logout />
     )
 }
 export default ConditionalRender
