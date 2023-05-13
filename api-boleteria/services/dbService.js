@@ -148,6 +148,14 @@ const dbService = () => {
             .from(tables.eventsTable)
             .join(tables.sponsorsTable, 'eventos.ID_Patrocinador', 'patrocinadores.ID_Patrocinador')
             .where('patrocinadores.ID_Us', id)
+        },
+
+        getSponsorByUser: (id) => {
+            return knex(tables.sponsorsTable)
+                .where({
+                    ID_us: id 
+                })
+                .select()
         }
     }
 

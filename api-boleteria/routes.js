@@ -126,6 +126,15 @@ module.exports = function(app, dbService){
         })
     })
 
+    app.get('/api/sponsor/user/:id', (req, res) => {
+        const id = req.params.id;
+        dbService.Sponsors.getSponsorByUser(id).then((result) => {
+            res.json(result);
+        }).catch(e => {
+            res.status(500).json(e);
+        })
+    })
+
     /*---------------------------------Images-------------------------------------------*/
 
     app.get('/api/images', (req, res) => {
