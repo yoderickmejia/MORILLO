@@ -1,0 +1,87 @@
+.register {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secundary);
+}
+
+.registerPanel {
+    width: clamp(300px, 35vw, 400px);
+    background-color: var(--primary);
+    padding: clamp(20px, 7vh, 70px) 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .2);
+    row-gap: clamp(20px, 5vh, 50px);;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 50px 10px;
+    border-radius: 3px;
+}
+
+.registerHeader {
+    color: var(--text);
+    text-align: center;
+}
+
+.registerHeader > .headerTitle {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.registerHeader > .headerSubtitle {
+    color: var(--text-light);
+}
+
+.registerHeader > *, form > * {
+    display: block;
+}
+
+form > input {
+    padding: 7px;
+    outline: none;
+}
+
+form > input[type="text"], form > input[type="password"], form > input[type="date"] {
+    margin-bottom: 20px;
+    border: 1px solid lightgray;
+    font-size: 0.9rem;
+}
+
+form > input[type="text"]:focus, form > input[type="password"]:focus, form > input[type="date"] {
+    border-color: var(--acent);
+}
+
+form label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+form > input[type="submit"] {
+    color: white;
+    background-color: var(--acent);
+    border: none;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 500px) {
+    .registerPanel {
+        border: none;
+        box-shadow: none;
+        height: 100%;
+        width: 100%;
+        border-radius: 0;
+        justify-content: center;
+        margin: 0;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    input {
+        width: 100%;
+    }
+}
